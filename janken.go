@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"./hand"
+	"github.com/shinshin86/go-janken/hand"
 )
 
 func main() {
