@@ -34,7 +34,7 @@ func NewHand(name string) (*Hand, error) {
 }
 
 // update hand method(public function)
-func (hand Hand) UpdateHand() Hand {
+func (hand *Hand) UpdateHand() *Hand {
 	hand.handNum = selectHand()
 	return hand
 }

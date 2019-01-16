@@ -21,9 +21,14 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(handA.GetHand())
-	fmt.Println(handB.GetHand())
-	fmt.Println(hand.Battle(handA, handB))
-	fmt.Println(handA)
-	fmt.Println(handB)
+	battleCount := 0
+	for battleCount < 10 {
+		battleCount++
+		fmt.Println(battleCount)
+		fmt.Println(handA.UpdateHand())
+		fmt.Println(handB.UpdateHand())
+		fmt.Println(handA.GetHand())
+		fmt.Println(handB.GetHand())
+		fmt.Println(hand.Battle(handA, handB))
+	}
 }
