@@ -3,14 +3,14 @@ package hand
 import (
 	"errors"
 	"fmt"
+	"github.com/shinshin86/go-janken/user"
 	"math/rand"
 	"time"
 )
 
 type Hand struct {
-	Name     string
-	winCount int
-	handNum  int
+	user    *user.User
+	handNum int
 }
 
 var handMap = map[int]string{
@@ -25,11 +25,16 @@ func NewHand(name string) (*Hand, error) {
 		return nil, errors.New("Required hand name")
 	}
 
+	user, err := user.NewUser(name)
+
+	if err != nil {
+		return nil, errors.New("Create user error")
+	}
+
 	handInt := selectHand()
 	return &Hand{
-		Name:     name,
-		handNum:  handInt,
-		winCount: 0,
+		user:    user,
+		handNum: handInt,
 	}, nil
 }
 
@@ -37,6 +42,11 @@ func NewHand(name string) (*Hand, error) {
 func (hand *Hand) UpdateHand() *Hand {
 	hand.handNum = selectHand()
 	return hand
+}
+
+// get user method (public function)
+func (hand *Hand) GetUser() *user.User {
+	return hand.user
 }
 
 // get handNum function(private function)
@@ -53,12 +63,17 @@ func (hand Hand) GetHand() string {
 // Battle function (public function)
 func Battle(handA, handB *Hand) string {
 	if (handA.handNum == 0 && handB.handNum == 1) || (handA.handNum == 1 && handB.handNum == 2) || handA.handNum == 2 && handB.handNum == 0 {
-		handA.winCount++
-		return fmt.Sprintf("%sの勝ち", handA.Name)
+		handA.user.Win()
+		handB.user.Lose()
+		return fmt.Sprintf("%sの勝ち", handA.user.Name)
 	} else if (handB.handNum == 0 && handA.handNum == 1) || (handB.handNum == 1 && handA.handNum == 2) || handB.handNum == 2 && handA.handNum == 0 {
-		handB.winCount++
-		return fmt.Sprintf("%sの勝ち", handB.Name)
+		handA.user.Lose()
+		handB.user.Win()
+		return fmt.Sprintf("%sの勝ち", handB.user.Name)
 	} else {
+		handA.user.Draw()
+		handB.user.Draw()
+
 		return fmt.Sprintf("引き分け")
 	}
 }

@@ -30,5 +30,7 @@ func main() {
 		fmt.Println(handA.GetHand())
 		fmt.Println(handB.GetHand())
 		fmt.Println(hand.Battle(handA, handB))
+		fmt.Println(handA.GetUser())
+		fmt.Println(handB.GetUser())
 	}
 }
