@@ -13,8 +13,8 @@ func TestNewHandSuccess(t *testing.T) {
 		t.Errorf("error")
 	}
 
-	if name != hand.Name {
-		t.Errorf("got %v\nwant %v", hand.Name, name)
+	if name != hand.GetUser().Name {
+		t.Errorf("got %v\nwant %v", hand.GetUser().Name, name)
 	}
 	t.Log(hand)
 }
